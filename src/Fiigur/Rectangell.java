@@ -42,50 +42,23 @@ public class Rectangell extends Figur {
   @Override
     public Shape getCreate(){
       recta.setCursor(Cursor.HAND);
-
-      recta.addEventHandler(MouseEvent.MOUSE_PRESSED, ev -> {
-                  if (ev.getButton() == MouseButton.PRIMARY){
-
-                     // musx = ev.getSceneX();
-                     // musy = ev.getSceneY();
-                      //recta.getLayoutX();
-                      //recta.getLayoutY();
-                      if(isSetForan()){
-                          recta.setX(ev.getX());
-                          recta.setY(ev.getY());
-                          recta.toFront();
-                      }
-                  }
-      });
       recta.addEventHandler(MouseEvent.MOUSE_DRAGGED, ev -> {
-          if (ev.getButton() == MouseButton.SECONDARY){
+          if (ev.getButton() == MouseButton.PRIMARY) {
+              recta.setX(ev.getX());
+              recta.setY(ev.getY());
+          } else if (ev.getButton() == MouseButton.SECONDARY) {
               recta.setWidth(ev.getX());
               recta.setHeight(ev.getY());
-
           }
-
+      });
+      recta.addEventHandler(MouseEvent.MOUSE_PRESSED, ev -> {
+          if(isSetForan()){
+              recta.toFront();
+          }
       });
 
         return recta;
     }
-
-
-
-    /* pane.addEventHandler(MouseEvent.MOUSE_PRESSED, ev -> {
-        xline = ev.getX();
-        yline = ev.getY();
-
-    });
-                recta.addEventHandler(MouseEvent.MOUSE_DRAGGED, ev -> {
-        recta.setX(event.getX());
-          recta.setY(event.getY());
-    });
-                pane.addEventHandler(MouseEvent.MOUSE_RELEASED, ev -> {
-        line = null;
-    });
-
-
-     */
 
 
 

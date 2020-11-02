@@ -16,10 +16,12 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
+import javax.swing.*;
 import java.util.List;
 
 public abstract class Figur {
-    protected ColorPicker colorPicker;
+
+     ColorPicker colorPicker;
     private Shape shape ;
     private double x;
     private double y;
@@ -27,8 +29,6 @@ public abstract class Figur {
     private int prevDragX;  // During drag  ging, these record the x and y coordinates of the
     private int prevDragY;
 
-private RadioButton radioButtons ;
-  private Figur figur= null;
 
     public Figur() {
 
@@ -61,17 +61,6 @@ private RadioButton radioButtons ;
     void endreStørrelse(int dx, int dy){
         bredde += dx;
         høyde += dy;
-    }
-    public void nyStørrelse(MouseEvent scrollEvent) {
-        int x = (int) scrollEvent.getX();
-        int y = (int) scrollEvent.getY();
-        if ( figur != null) {
-            figur.endreStørrelse(x + prevDragX, y + prevDragY);
-            prevDragX = x;
-            prevDragY = y;
-            System.out.println(prevDragX);
-            System.out.println(prevDragY);
-        }
     }
 
 

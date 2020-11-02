@@ -22,146 +22,69 @@ import java.util.ArrayList;
 
 public class MainOblig extends Application {
 
-    public static void main(String[] args) {
-        launch(args);
-    }
 
     ColorPicker picker = new ColorPicker();
     Label lbl = new Label(" velg farge ");
-    ArrayList<Figur> figures = new ArrayList<Figur>();
-    private Line line;
+    ArrayList<Figur> figures = new ArrayList<>();
+
+
     private Pane pane;
-    private double xline;
-    private double yline;
-    BorderPane root= null;
-    double bredde, høyde;
-    TextArea musPosisjon;
-    Figur figuren;
+
+
     @Override
     public void start(Stage primaryStage) {
 
         pane = new Pane();
-
+// lager radio button knapper
         RadioButton radioButton1 = new RadioButton("Rectangel");
         RadioButton radioButton2 = new RadioButton("Circle");
         RadioButton radioButton3 = new RadioButton("Linje");
-
+//  togle group skal hjelp med å skille radio button hver kgng jeg trykker på en så skal kunn
         ToggleGroup radioGroup = new ToggleGroup();
         radioButton1.setToggleGroup(radioGroup);
         radioButton2.setToggleGroup(radioGroup);
         radioButton3.setToggleGroup(radioGroup);
 
-
+        // lager h box for å sorter knapper, label og
         HBox hbox = new HBox(lbl, picker, radioButton1, radioButton2, radioButton3);
         hbox.setSpacing(20);
         hbox.setPadding(new Insets(25, 50, 50, 60));
         pane.getChildren().add(hbox);
 
-
-
+        /* her skal det tegenes figurer av circle rectangel og linje
+        * linje circle og rectagnel har sin egen classe med de er subclasse av figure
+        *
+         */
        pane.setOnMouseClicked(ev ->{
-            if(ev.getButton().equals(MouseButton.MIDDLE)){
+            if(ev.getButton().equals(MouseButton.MIDDLE)) {
                 if (radioButton1.isSelected()) {
                     Figur figurRectangel = new Rectangell(100, 200, 100, 100);
                     Shape s = figurRectangel.getCreate();
                     pane.getChildren().add(s);
                     figures.add(figurRectangel);
                     s.setFill(picker.getValue());
-                }
-            }
-
-        });
-
-
-        pane.setOnMouseClicked(event ->{
-            if(event.getButton().equals(MouseButton.MIDDLE)){
-                if (radioButton2.isSelected()) {
-                    Figur figurCircle = new Circlee(100, 100, 50);
+                } else if (radioButton2.isSelected()) {
+                    Figur figurCircle = new Circlee(100, 100);
                     Shape c = figurCircle.getCreate();
                     figures.add(figurCircle);
-                    //figurCircle.nyStørrelse();
                     pane.getChildren().add(c);
                     c.setFill(picker.getValue());
-
+                } else if (radioButton3.isSelected()) {
+                    Figur figLinje = new Linje();
+                    Shape linjeShape = figLinje.getCreate();
+                    figures.add(figLinje);
+                    pane.getChildren().add(linjeShape);
 
                 }
             }
-
-
-
         });
-
-
-
-        /*radioButton1.setOnAction(event -> {
-            if (radioButton1.isSelected()) {
-                Figur figurRectangel = new Rectangell(100, 200, 100, 100);
-                Shape s = figurRectangel.getCreate();
-                pane.getChildren().add(s);
-                figures.add(figurRectangel);
-                s.setFill(picker.getValue());
-            }
-        });
-
-         */
-
-
-
-
-
-        radioButton3.setOnAction(event -> {
-
-            if (radioButton3.isSelected()) {
-                pane.addEventHandler(MouseEvent.MOUSE_PRESSED, ev -> {
-                    xline = ev.getX();
-                    yline = ev.getY();
-
-                });
-                pane.addEventHandler(MouseEvent.MOUSE_DRAGGED, ev -> {
-                    if (line == null) {
-                        addLine(ev.getX(), ev.getY());
-                    } else {
-                        line.setEndX(ev.getX());
-                        line.setEndY(ev.getY());
-                    }
-                });
-                pane.addEventHandler(MouseEvent.MOUSE_RELEASED, ev -> {
-                    line = null;
-                });
-            }
-        });
-
-
-
-
-        // arraylist.add(figur);
-            // når jeg tykker på canvs så lager den figuren, den blir stored av arraylist
-
-
-            //ArrayList<Figur> figures = new ArrayList<Figur>();
-            //figures.add(figur);
-            //figures.add(figur2);
-            //figures.add(figur3);
-
 
             Scene scene = new Scene(pane,700,650);
             primaryStage.setScene(scene);
             primaryStage.show();
-
-
         }
 
-
-
-
-
-
-
-    private void addLine(double x, double y) {
-        line = new Line(xline, yline, x, y);
-        pane.getChildren().add(line);
-
+    public static void main(String[] args) {
+        launch(args);
     }
-
-
 }
